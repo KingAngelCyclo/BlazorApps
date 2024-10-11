@@ -1,0 +1,124 @@
+﻿@page "/tarea"
+
+<PageTitle>Tareas</PageTitle>
+
+<div class="card text-bg-dark mb-3">
+    <h5 class="card-header">@Accion producto</h5>
+    <div class="card-body">
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Titulo</label>
+            <input type="email" class="form-control" id="nombre" placeholder="Nombre" disabled="@DisableInputs">
+        </div>
+        <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea class="form-control" id="descripcion" rows="3" disabled="@DisableInputs"></textarea>
+        </div>
+        <select class="form-select form-select-lg mb-3" aria-label="Large select example">
+            <option selected>State</option>
+            <option value="1">Pendiente</option>
+            <option value="2">En Progreso</option>
+            <option value="3">Completada</option>
+        </select>
+        <select class="form-select form-select-lg mb-3" aria-label="Large select example">
+            <option selected>Priority</option>
+            <option value="1">Baja</option>
+            <option value="2">Media</option>
+            <option value="3">Alta</option>
+        </select>
+        <div>@InicioTarea</div>
+        <span class="btn btn-primary">Aceptar</span>
+        <span class="btn btn-danger" @onclick="btnCancelarClick">Cancelar</span>
+    </div>
+</div>
+
+<div class="card text-bg-dark mb-3" style="max-width: auto;">
+    <div class="card-header">Tareas en procesos
+        <span class="btn btn-success" @onclick="btnAgregarClick">+</span>
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">State</th>
+                    <th scope="col">Priority</th>
+                    <th scope="col">Progress</th>
+                    <th scope="col">Start date</th>
+                    <th scope="col">End date</th>
+                    <th scope="col">Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>C# Web</td>
+                    <td>Crear un Crup en Blazor</td>
+                    <td>En Progreso</td>
+                    <td>Alta</td>
+                    <td>
+                        <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 5%"></div>
+                        </div>
+                    </td>
+                    <td>10/10/24</td>
+                    <td>10/11/24</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                            <span @onclick="btnEditarClick" class="btn btn-outline-warning">Editar</span>
+                            <span @onclick="btnEliminarClick" class="btn btn-outline-danger">Eliminar</span>
+                            <span @onclick="btnVerClick" class="btn btn-outline-primary">Ver</span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+@code {
+    string Accion = "Registrar";
+    bool ShowForm = false, DisableInputs = false;
+
+    public void btnAgregarClick()
+    {
+        Accion = "Registrar";
+        ShowForm = true;
+        StateHasChanged();
+        DisableInputs = false;
+    }
+    public void btnEditarClick()
+    {
+        Accion = "Editar";
+        ShowForm = true;
+        DisableInputs = false;
+    }
+    public void btnEliminarClick()
+    {
+        Accion = "Eliminar";
+        ShowForm = true;
+        DisableInputs = true;
+    }
+    public void btnVerClick()
+    {
+        Accion = "Ver";
+        ShowForm = true;
+        DisableInputs = true;
+    }
+    public void btnCancelarClick()
+    {
+        ShowForm = false;
+    }
+
+    DateTime InicioTarea = new DateTime();
+    DateTime TerminoTarea = new DateTime();
+    DateTime CompletoTarea = new DateTime();
+
+    private DateTime selectedDate = DateTime.Now;
+    private string selectedTime = DateTime.Now.ToString("HH:mm");
+
+}
